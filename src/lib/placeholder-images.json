@@ -1,0 +1,34 @@
+{
+  "placeholderImages": [
+    {
+      "id": "station-1",
+      "description": "A modern EV charging station.",
+      "imageUrl": "https://images.unsplash.com/photo-1593941707874-ef25b8b4a92b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjaGFyZ2luZyUyMHN0YXRpb258ZW58MHx8fHwxNzYzODI1NTAyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "charging station"
+    },
+    {
+      "id": "station-2",
+      "description": "A bright EV charging station in a city.",
+      "imageUrl": "https://images.unsplash.com/photo-1615901555268-839b7a1ede54?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxldiUyMGNoYXJnZXJ8ZW58MHx8fHwxNzYzODI1NTAyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ev charger"
+    },
+    {
+      "id": "station-3",
+      "description": "Multiple EV chargers lined up.",
+      "imageUrl": "https://images.unsplash.com/photo-1760278041827-2b792dbd57ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjaGFyZ2luZyUyMGh1YnxlbnwwfHx8fDE3NjM4MjU1MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "charging hub"
+    },
+    {
+      "id": "station-4",
+      "description": "An EV charger at a suburban location.",
+      "imageUrl": "https://images.unsplash.com/photo-1633994072400-27f9191a5adc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzdWJ1cmJhbiUyMGNoYXJnaW5nfGVufDB8fHx8MTc2MzgyNTUwMnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "suburban charging"
+    },
+    {
+      "id": "user-avatar",
+      "description": "Placeholder for user avatar.",
+      "imageUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwZXJzb24lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjM3MTEyNTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person portrait"
+    }
+  ]
+}

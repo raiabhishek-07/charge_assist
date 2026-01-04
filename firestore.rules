@@ -1,0 +1,38 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to check for an admin document.
+    // This is NOT the same as custom claims, but works for this app's structure.
+    function isAdmin() {
+      return request.auth != null && exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+    }
+
+    // USERS can only read and write their own profile
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // CHARGING STATIONS are public to read, but only admins can modify them
+    match /charging_stations/{stationId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // BOOKING REQUESTS can be created by any authenticated user.
+    // Users can only read THEIR OWN requests.
+    // Admins have full access to all requests.
+    match /bookingRequests/{docId} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow list, update, delete: if isAdmin();
+    }
+    
+    // The roles_admin collection should be read-only for admins and inaccessible to others.
+    match /roles_admin/{userId} {
+      allow get: if isAdmin();
+      allow list, create, update, delete: if false;
+    }
+  }
+}

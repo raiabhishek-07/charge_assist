@@ -1,0 +1,10 @@
+# This file configures the build settings for deploying on Netlify.
+# It specifies the build command, the publish directory, and the essential
+# Next.js plugin needed for App Router, server components, and API routes.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

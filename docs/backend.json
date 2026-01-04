@@ -1,0 +1,107 @@
+
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the ChargeAssist application.",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the user." },
+        "email": { "type": "string", "description": "User's email address.", "format": "email" },
+        "name": { "type": "string", "description": "User's full name." },
+        "phoneNumber": { "type": "string", "description": "User's phone number." }
+      },
+      "required": ["id", "email", "name", "phoneNumber"]
+    },
+    "ChargingStation": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ChargingStation",
+      "type": "object",
+      "description": "Represents a charging station.",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the charging station." },
+        "name": { "type": "string", "description": "Name of the charging station." },
+        "location": { "type": "string", "description": "Location of the charging station (e.g., address or coordinates)." },
+        "availableSlots": { "type": "number", "description": "Number of available charging slots at the station." },
+        "details": { "type": "string", "description": "Detailed information about the charging station." }
+      },
+      "required": ["id", "name", "location", "availableSlots", "details"]
+    },
+    "Booking": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Booking",
+      "type": "object",
+      "description": "Represents a booking for a charging slot by a logged-in user.",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the booking." },
+        "userId": { "type": "string", "description": "Reference to User. (Relationship: User 1:N Booking)" },
+        "chargingStationId": { "type": "string", "description": "Reference to ChargingStation." },
+        "bookingTime": { "type": "string", "description": "Date and time of the booking.", "format": "date-time" },
+        "vehicleNumber": { "type": "string", "description": "Vehicle number associated with the booking." }
+      },
+      "required": ["id", "userId", "chargingStationId", "bookingTime", "vehicleNumber"]
+    },
+    "FriendsBooking": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "FriendsBooking",
+      "type": "object",
+      "description": "Represents a booking made from the public 'Friends Booking' page, pending admin approval.",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the booking request." },
+        "name": { "type": "string", "description": "Name of the person making the booking." },
+        "phoneNumber": { "type": "string", "description": "Phone number of the person." },
+        "vehicleNumber": { "type": "string", "description": "Vehicle registration number." },
+        "duration": { "type": "string", "description": "Requested charging duration in minutes." },
+        "stationId": { "type": "string", "description": "The ID of the station being booked." },
+        "slotId": { "type": "string", "description": "The specific slot being requested." },
+        "type": { "type": "string", "enum": ["standard", "emergency"], "description": "The type of booking." },
+        "status": { "type": "string", "enum": ["pending", "approved", "denied"], "description": "Approval status of the request." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp of the request." },
+        "location": { "type": "string", "description": "User's location for emergency requests." }
+      },
+      "required": ["id", "name", "phoneNumber", "vehicleNumber", "duration", "stationId", "slotId", "type", "status", "createdAt"]
+    },
+    "EmergencyChargingRequest": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "EmergencyChargingRequest",
+      "type": "object",
+      "description": "Represents a request for emergency charging service by a logged-in user.",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the emergency charging request." },
+        "userId": { "type": "string", "description": "Reference to User." },
+        "location": { "type": "string", "description": "Location where the emergency charging is requested." },
+        "vehicleType": { "type": "string", "description": "Type of vehicle requiring emergency charging." },
+        "requestTime": { "type": "string", "format": "date-time", "description": "Timestamp of the request." },
+        "status": { "type": "string", "description": "Status of the request (e.g., pending, approved, denied)." }
+      },
+      "required": ["id", "userId", "location", "vehicleType", "requestTime", "status"]
+    },
+    "Admin": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Admin",
+      "type": "object",
+      "description": "Represents an administrator of the application.",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the admin." },
+        "email": { "type": "string", "description": "Admin's email address.", "format": "email" },
+        "name": { "type": "string", "description": "Admin's full name." }
+      },
+      "required": ["id", "email", "name"]
+    }
+  },
+  "auth": {
+    "providers": ["password", "anonymous"]
+  },
+  "firestore": {
+    "structure": [
+      { "path": "/users/{userId}", "definition": { "entityName": "User", "schema": { "$ref": "#/backend/entities/User" }, "description": "Stores user profiles." } },
+      { "path": "/charging_stations/{chargingStationId}", "definition": { "entityName": "ChargingStation", "schema": { "$ref": "#/backend/entities/ChargingStation" }, "description": "Stores charging station details." } },
+      { "path": "/users/{userId}/bookings/{bookingId}", "definition": { "entityName": "Booking", "schema": { "$ref": "#/backend/entities/Booking" }, "description": "Stores bookings for logged-in users." } },
+      { "path": "/emergency_charging_requests/{emergencyChargingRequestId}", "definition": { "entityName": "EmergencyChargingRequest", "schema": { "$ref": "#/backend/entities/EmergencyChargingRequest" }, "description": "Stores emergency requests from logged-in users." } },
+      { "path": "/roles_admin/{userId}", "definition": { "entityName": "Admin", "schema": { "$ref": "#/backend/entities/Admin" }, "description": "Grants admin privileges via document existence." } },
+      { "path": "/friendsBookings/{bookingId}", "definition": { "entityName": "FriendsBooking", "schema": { "$ref": "#/backend/entities/FriendsBooking" }, "description": "Stores booking requests from the public 'Friends Booking' page, managed by admins." } }
+    ],
+    "reasoning": "The Firestore structure is designed for security and scalability. Key collections include users, charging_stations, and various booking/request types. User-specific data is nested where appropriate (e.g., user bookings) to enforce ownership via security rules. A new top-level `friendsBookings` collection has been added to handle booking requests from unauthenticated users on the new page; these are publicly writable but only manageable by admins, ensuring all requests go through an approval process."
+  }
+}
